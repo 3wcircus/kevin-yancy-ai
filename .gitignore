@@ -1,0 +1,52 @@
+# Secrets & credentials
+.env
+.env.*
+*.txt
+firebase-svc-account.json
+*-key.txt
+*-account.txt
+service-account*.json
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+database-debug.log
+pubsub-debug.log
+
+# Node / Functions
+functions/node_modules/
+functions/lib/
+node_modules/
+
+# Flutter / Dart
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.packages
+app/build/
+app/.idea/
+app/*.iml
+app/android/.gradle/
+app/android/local.properties
+app/android/app/google-services.json
+app/ios/Pods/
+app/ios/.symlinks/
+app/ios/Flutter/flutter_export_environment.sh
+app/ios/Runner/GoogleService-Info.plist
+app/web/firebase-config.js
+
+# General
+.DS_Store
+Thumbs.db
+*.log
+*.class
+*.pyc
+__pycache__/
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo

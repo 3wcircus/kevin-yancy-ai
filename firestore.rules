@@ -1,0 +1,50 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.role == 'admin';
+    }
+
+    function isDelegate() {
+      return isAuthenticated() && request.auth.token.role == 'delegate';
+    }
+
+    function isAdminOrDelegate() {
+      return isAdmin() || isDelegate();
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isOwner(userId) || isAdminOrDelegate());
+      allow write: if isAuthenticated() && (isOwner(userId) || isAdminOrDelegate());
+    }
+
+    // Memories collection — family memories, stories, Q&A pairs
+    match /memories/{memoryId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Conversations collection — chat history per user
+    match /conversations/{convId} {
+      allow read, write: if isAuthenticated() && request.auth.uid == resource.data.userId;
+      allow create: if isAuthenticated() && request.auth.uid == request.resource.data.userId;
+    }
+
+    // Invites collection — invitation tokens for new family members
+    match /invites/{inviteId} {
+      allow read, write: if isAdminOrDelegate();
+    }
+  }
+}

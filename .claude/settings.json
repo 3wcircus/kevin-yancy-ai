@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(gcloud logging:*)",
+      "Bash(python -c \":*)",
+      "Bash(gcloud functions:*)",
+      "Bash(curl -s -X POST \"https://us-central1-kevin-yancy-ai.cloudfunctions.net/inviteUser\" -H \"Content-Type: application/json\" -d '{\"\"\"\"data\"\"\"\":{\"\"\"\"email\"\"\"\":\"\"\"\"test@example.com\"\"\"\",\"\"\"\"displayName\"\"\"\":\"\"\"\"Test\"\"\"\",\"\"\"\"assignedRole\"\"\"\":\"\"\"\"family\"\"\"\"}}')",
+      "Bash(node -e \":*)",
+      "Bash(for fn:*)",
+      "Bash(do gcloud:*)",
+      "Bash(do)",
+      "Bash(echo -n \"$fn: \")",
+      "Bash(done)",
+      "Read(//e/projects/**)",
+      "Bash(firebase functions:delete onUserSignIn --region us-central1 --force)",
+      "Bash(gh auth:*)"
+    ]
+  }
+}

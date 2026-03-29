@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Kevin — Always with us. A memorial AI experience for Kevin Yancy's family and friends.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kevin">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Kevin</title>
+
+  <meta name="theme-color" content="#1A2B4A">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* Splash / loading screen */
+    body {
+      margin: 0;
+      background-color: #1A2B4A;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    #loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #FAF5EC;
+    }
+
+    .loading-logo {
+      width: 80px;
+      height: 80px;
+      background: #D4891A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 24px;
+      box-shadow: 0 0 40px rgba(212, 137, 26, 0.4);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .loading-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .loading-subtitle {
+      font-size: 14px;
+      opacity: 0.6;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+
+    .loading-dots {
+      margin-top: 40px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .loading-dots span {
+      width: 8px;
+      height: 8px;
+      background: #D4891A;
+      border-radius: 50%;
+      animation: dot-bounce 1.2s ease-in-out infinite;
+    }
+
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(212, 137, 26, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(212, 137, 26, 0.6); }
+    }
+
+    @keyframes dot-bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.4; }
+      50% { transform: translateY(-8px); opacity: 1; }
+    }
+  </style>
+
+  <!-- Firebase JS SDKs (needed for web platform) -->
+  <!-- Using compat mode to work alongside FlutterFire web -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-functions-compat.js"></script>
+</head>
+<body>
+
+  <!-- Loading splash screen -->
+  <div id="loading">
+    <div class="loading-logo">K</div>
+    <div class="loading-title">Kevin</div>
+    <div class="loading-subtitle">Always with us.</div>
+    <div class="loading-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <script>
+    // Firebase initialization for web
+    // Note: FlutterFire also initializes Firebase via Dart; this compat
+    // initialization ensures the JS SDKs are ready before Flutter loads.
+    const firebaseConfig = {
+      apiKey: "AIzaSyCeWfVefIX2XL3OIu5coKlJ00xD1SvE0P8",
+      authDomain: "kevin-yancy-ai.firebaseapp.com",
+      projectId: "kevin-yancy-ai",
+      storageBucket: "kevin-yancy-ai.firebasestorage.app",
+      messagingSenderId: "1059866072416",
+      appId: "1:1059866072416:web:d2d07cd30d3b5aea3b7a05"
+    };
+
+    // Only initialize if not already initialized
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+  </script>
+
+  <!-- This script adds the service worker that enables PWA functionality -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('flutter-first-frame', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js?v={{ flutter_service_worker_version }}');
+      });
+    }
+  </script>
+
+  <script src="main.dart.js" type="application/javascript"></script>
+
+  <script>
+    // Hide loading screen once Flutter renders its first frame
+    window.addEventListener('flutter-first-frame', function() {
+      const loading = document.getElementById('loading');
+      if (loading) {
+        loading.style.transition = 'opacity 0.5s ease';
+        loading.style.opacity = '0';
+        setTimeout(() => loading.remove(), 500);
+      }
+    });
+  </script>
+</body>
+</html>
